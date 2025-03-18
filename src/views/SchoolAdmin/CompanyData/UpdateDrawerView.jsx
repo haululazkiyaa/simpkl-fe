@@ -5,6 +5,7 @@ import { AuthContext } from "../../../context/AuthContext.jsx";
 import Button from "../../../components/Elements/Button/index.jsx";
 import Drawer from "../../../components/Elements/Drawer/index.jsx";
 import Input from "../../../components/Elements/Input/index.jsx";
+import FileInput from "../../../components/Elements/FileInput/index.jsx";
 import Logout from "../../../components/Elements/Logout/index.js";
 import PropTypes from "prop-types";
 import SuccessBadge from "../../../components/Elements/SuccessBadge/index.jsx";
@@ -29,6 +30,8 @@ export default function CompanyDataUpdateDrawerView(props) {
   const [alamat, setAlamat] = useState("");
   const [email, setEmail] = useState("");
   const [web, setWeb] = useState("");
+  const [foto, setFoto] = useState("");
+  const [previewFoto, setPreviewFoto] = useState("");
 
   // handle message
   const [message, setMessage] = useState("");
@@ -38,7 +41,7 @@ export default function CompanyDataUpdateDrawerView(props) {
     setProgress(30);
     setLoading(true);
     setMessage("");
-    const data = {
+    let data = {
       id: selected.id,
       username: username,
       nama_perusahaan: namaPerusahaan,
@@ -48,6 +51,13 @@ export default function CompanyDataUpdateDrawerView(props) {
       email: email,
       website: web,
     };
+    if (foto != "") {
+      data = {
+        ...data,
+        foto: foto,
+      };
+    }
+
     refreshToken((status, token) => {
       if (status) {
         setProgress(60);
@@ -95,10 +105,16 @@ export default function CompanyDataUpdateDrawerView(props) {
     setAlamat(selected?.alamat);
     setEmail(selected?.email);
     setWeb(selected?.website);
+    setPreviewFoto(selected?.foto);
   }, [selected]);
 
   const getDetails = () => {
     document.getElementById("init-drawer" + id).click();
+  };
+
+  const selectFile = (e) => {
+    setFoto(e.target.files[0]);
+    setPreviewFoto(URL.createObjectURL(e.target.files[0]));
   };
 
   return (
@@ -189,6 +205,30 @@ export default function CompanyDataUpdateDrawerView(props) {
               onChange={(e) => setWeb(e.target.value)}
               required={true}
             />
+            {previewFoto == "" ? (
+              <FileInput
+                id="foto"
+                name="foto"
+                label="Unggah Foto"
+                onChange={(e) => selectFile(e)}
+                required={true}
+              />
+            ) : (
+              <>
+                <img src={previewFoto} alt="Foto Kegiatan" />
+                <Button
+                  variant="red"
+                  width="full"
+                  outline={true}
+                  onClick={() => {
+                    setPreviewFoto("");
+                    setFoto("");
+                  }}
+                >
+                  Reset Gambar
+                </Button>
+              </>
+            )}
             <Alert>{message}</Alert>
             <Button type="submit" width="full" disabled={loading}>
               {loading ? (
@@ -218,7 +258,7 @@ export default function CompanyDataUpdateDrawerView(props) {
             </Button>
           </form>
         ) : (
-          <SuccessBadge id={id}>Berhasil menambahkan data!</SuccessBadge>
+          <SuccessBadge id={id}>Berhasil mengubah data!</SuccessBadge>
         )}
       </Drawer>
     </>

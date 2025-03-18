@@ -153,7 +153,7 @@ export default function StudentDailyJournalAddDrawerView(props) {
   return (
     <>
       <Button onClick={() => initDrawer()}>
-        <i className="fa-solid fa-plus mr-2"></i>Buat Jurnal Sekarang!
+        <i className="fa-solid fa-plus mr-2"></i>Tambah Jurnal
       </Button>
       <div className="text-left">
         <Drawer title="Buat Jurnal Hari Ini" id={id}>

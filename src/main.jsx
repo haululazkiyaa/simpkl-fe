@@ -33,12 +33,13 @@ import StudentMonthlyGradePage from "./pages/student/monthly-grade/index.jsx";
 import StudentMonthlyJournalPage from "./pages/student/monthly-journal/index.jsx";
 import StudentPage from "./pages/student/index.jsx";
 import StudentPresencePage from "./pages/student/presence/index.jsx";
-import SupervisorDailyMonitoringPage from "./pages/supervisor/daily-monitoring/index.jsx";
 import SupervisorFinalAssesmentPage from "./pages/supervisor/final-assesment/index.jsx";
 import SupervisorMonthlyAssesmentPage from "./pages/supervisor/monthly-assesment/index.jsx";
-import SupervisorMonthlyMonitoringPage from "./pages/supervisor/monthly-monitoring/index.jsx";
 import SupervisorPage from "./pages/supervisor/index.jsx";
 import SupervisorPresencePage from "./pages/supervisor/presence/index.jsx";
+import SupervisorDailyMonitoringPage from "./pages/supervisor/daily-monitoring/index.jsx"
+import SchoolAdminAnnouncementDataPage from "./pages/school-admin/announcement/index.jsx"
+import SupervisorMonthlyMonitoringPage from "./pages/instructor/monthly-monitoring/index.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <DashboardPage />, errorElement: <ErrorPage /> },
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "school-admin/settings",
         element: <SchoolAdminSettingsPage />,
+      },
+      {
+        path: "school-admin/announcements",
+        element: <SchoolAdminAnnouncementDataPage />,
       },
       {
         path: "school-admin/major-management",
@@ -115,24 +120,24 @@ const router = createBrowserRouter([
     element: <SupervisorPage />,
     children: [
       {
-        path: "supervisor/daily-monitoring",
-        element: <SupervisorDailyMonitoringPage />,
-      },
-      {
-        path: "supervisor/monthly-monitoring",
-        element: <SupervisorMonthlyMonitoringPage />,
-      },
-      {
-        path: "supervisor/presence",
-        element: <SupervisorPresencePage />,
+        path: "supervisor/final-assesment",
+        element: <SupervisorFinalAssesmentPage />,
       },
       {
         path: "supervisor/monthly-assesment",
         element: <SupervisorMonthlyAssesmentPage />,
       },
       {
-        path: "supervisor/final-assesment",
-        element: <SupervisorFinalAssesmentPage />,
+        path: "supervisor/presence",
+        element: <SupervisorPresencePage />,
+      },
+      {
+        path: "supervisor/daily-monitoring",
+        element: <SupervisorDailyMonitoringPage />,
+      },
+      {
+        path: "supervisor/monthly-monitoring",
+        element: <SupervisorMonthlyMonitoringPage />,
       },
     ],
   },

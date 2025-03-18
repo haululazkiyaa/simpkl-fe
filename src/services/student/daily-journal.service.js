@@ -6,7 +6,7 @@ export const getJurnalHarian = async (filterDate, token, callback) => {
     .get(
       `${
         import.meta.env.VITE_API_URL
-      }/jurnal-harian/siswa/get?tanggal=${filterDate}`,
+      }/jurnal-harian/siswa/get-new?tanggal=${filterDate}`,
       {
         headers: {
           Authorization: "Bearer " + token,
@@ -14,6 +14,7 @@ export const getJurnalHarian = async (filterDate, token, callback) => {
       }
     )
     .then((res) => {
+      console.log(res.data.data)
       callback(true, res.data.data);
     })
     .catch(() => {
@@ -54,6 +55,7 @@ export const addJurnalHarian = async (data, token, callback) => {
 };
 
 export const deleteJurnalHarian = async (data, token, callback) => {
+  console.log(data)
   await axiosReq
     .delete(`${import.meta.env.VITE_API_URL}/jurnal-harian/delete`, {
       data,

@@ -1,5 +1,4 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-
 import { AuthContext } from "../../../context/AuthContext";
 import Logout from "../../../components/Elements/Logout";
 import SupervisorDailyMonitoringCommentView from "../../../views/Supervisor/DailyMonitoring/CommentView";
@@ -65,9 +64,11 @@ export default function SupervisorDailyMonitoringPage() {
         <div className="not-format">
           <SupervisorDailyMonitoringTableView
             data={data}
+            selected={selected}
             setSelected={setSelected}
             tanggal={tanggal}
             setTanggal={setTanggal}
+            handleDataHarian={handleDataHarian}
           />
           <SupervisorDailyMonitoringUpdateDrawerView
             handleDataHarian={handleDataHarian}

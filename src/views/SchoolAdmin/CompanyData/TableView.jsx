@@ -77,6 +77,11 @@ export default function CompanyDataTableView(props) {
     document.getElementById("update-drawer1").click();
   };
 
+  const initStaticModal = (item) => {
+    setSelected(item);
+    document.getElementById("init-static-modal").click();
+  };
+
   return (
     <>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -88,6 +93,9 @@ export default function CompanyDataTableView(props) {
               </th>
               <th scope="col" className="px-6 py-3">
                 Nama Perusahaan
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Foto Perusahaan
               </th>
               <th scope="col" className="px-6 py-3">
                 Nama Pimpinan
@@ -138,13 +146,21 @@ export default function CompanyDataTableView(props) {
                     {index + 1}
                   </th>
                   <td className="px-6 py-4">{item.nama_perusahaan}</td>
-                  <td className="px-6 py-4 truncate text-left">
+                  <td className="px-6 py-4">
+                    <Button
+                      variant="default"
+                      onClick={() => initStaticModal(item)}
+                    >
+                      <i className="fa-solid fa-eye"></i>
+                    </Button>
+                  </td>
+                  <td className="px-6 py-4 text-left">
                     {item.pimpinan}
                   </td>
-                  <td className="px-6 py-4 truncate text-left">{item.no_hp}</td>
-                  <td className="px-6 py-4 truncate">{item.alamat}</td>
-                  <td className="px-6 py-4 truncate text-left">{item.email}</td>
-                  <td className="px-6 py-4">{item.website}</td>
+                  <td className="px-6 py-4 text-left">{item.no_hp}</td>
+                  <td className="px-1 py-4 min-w-[300px] text-left">{item.alamat}</td>
+                  <td className="px-6 py-4 text-left">{item.email}</td>
+                  <td className="px-6 py-4"><a href={item.website} target="_blank" rel="noopener noreferrer">{item.website}</a></td>
                   <td className="px-6 py-4">{item.user?.username}</td>
                   <td className="px-6 py-4">
                     {item.user?.temp_password || "-"}

@@ -13,6 +13,11 @@ export const NavList = [
         icon: "fa-gear",
       },
       {
+        label: "Pengumuman",
+        href: "/school-admin/announcements",
+        icon: "fa-bullhorn",
+      },
+      {
         label: "Kelola Jurusan",
         href: "/school-admin/major-management",
         icon: "fa-list-ul",

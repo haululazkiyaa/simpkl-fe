@@ -6,6 +6,7 @@ export const addPerusahaan = async (data, token, callback) => {
     .post(`${import.meta.env.VITE_API_URL}/perusahaan/create`, data, {
       headers: {
         Authorization: "Bearer " + token,
+        "Content-Type": "multipart/form-data",
       },
     })
     .then(() => {
@@ -21,6 +22,7 @@ export const setPerusahaan = async (data, token, callback) => {
     .put(`${import.meta.env.VITE_API_URL}/perusahaan/update`, data, {
       headers: {
         Authorization: "Bearer " + token,
+        "Content-Type": "multipart/form-data",
       },
     })
     .then(() => {
