@@ -16,6 +16,7 @@ export default function SupervisorDailyMonitoringTableView(props) {
     props;
   const { setProgress } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [note, setNote] = useState("");
 
   const handleStatusJurnal = (option) => {
     setProgress(30);
@@ -24,7 +25,9 @@ export default function SupervisorDailyMonitoringTableView(props) {
     const data = {
       id_jurnal: selected.id,
       status: option,
+      catatan: note,
     };
+
     refreshToken((status, token) => {
       if (status) {
         setProgress(60);
@@ -39,6 +42,7 @@ export default function SupervisorDailyMonitoringTableView(props) {
               progress: undefined,
             });
             handleDataHarian();
+            setNote("");
           } else {
             toast.error(message, {
               autoClose: 3000,
@@ -68,12 +72,14 @@ export default function SupervisorDailyMonitoringTableView(props) {
 
   const initModal1 = (item) => {
     setSelected(item);
+    setNote(item.catatan_pembimbing || "");
     console.log(selected);
     document.getElementById("init-modal1").click();
   };
 
   const initModal2 = (item) => {
     setSelected(item);
+    setNote(item.catatan_pembimbing || "");
     document.getElementById("init-modal2").click();
   };
 
@@ -126,9 +132,6 @@ export default function SupervisorDailyMonitoringTableView(props) {
               </th>
               <th scope="col" className="w-32 px-3">
                 Status
-              </th>
-              <th scope="col" className="w-16 px-3">
-                Berikan Catatan
               </th>
             </tr>
           </thead>
@@ -207,12 +210,17 @@ export default function SupervisorDailyMonitoringTableView(props) {
           </tbody>
         </table>
       </div>
+
       <ConfirmModal
         desc={`Apakah anda yakin menyetujui jurnal ini?`}
         labelOk="Ya"
         labelCancel="Tidak"
         onClick={() => handleStatusJurnal("Diterima")}
         id="1"
+        showTextArea={true}
+        onNoteChange={setNote}
+        initialNote={note}
+        noteLabel="Catatan Pembimbing"
       />
       <ConfirmModal
         desc={`Apakah anda yakin menolak jurnal ini?`}
@@ -220,6 +228,10 @@ export default function SupervisorDailyMonitoringTableView(props) {
         labelCancel="Tidak"
         onClick={() => handleStatusJurnal("Ditolak")}
         id="2"
+        showTextArea={true}
+        onNoteChange={setNote}
+        initialNote={note}
+        noteLabel="Catatan Pembimbing"
       />
     </>
   );

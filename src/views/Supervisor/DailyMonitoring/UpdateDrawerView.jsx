@@ -150,3 +150,4 @@ SupervisorDailyMonitoringUpdateDrawerView.propTypes = {
   selected: PropTypes.any,
   id: PropTypes.string,
 };
+

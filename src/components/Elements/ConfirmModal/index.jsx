@@ -1,9 +1,20 @@
 import PropTypes from "prop-types";
 import { initFlowbite } from "flowbite";
 import { useEffect } from "react";
+import TextArea from "../../../components/Elements/Logout/index.js"; // Pastikan path ini sesuai
 
 export default function ConfirmModal(props) {
-  const { desc, labelOk, labelCancel, onClick, id = "" } = props;
+  const { 
+    desc, 
+    labelOk, 
+    labelCancel, 
+    onClick, 
+    id = "",
+    showTextArea = false,       // Prop baru
+    onNoteChange = () => {},    // Prop baru
+    initialNote = "",           // Prop baru
+    noteLabel = "Berikan Catatan" // Prop baru dengan default value
+  } = props;
 
   useEffect(() => {
     initFlowbite();
@@ -75,6 +86,23 @@ export default function ConfirmModal(props) {
               <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                 {desc}
               </h3>
+
+              {/* Tambahkan TextArea jika showTextArea true */}
+              {showTextArea && (
+                <div className="mb-4 text-left"> {/* text-left untuk alignment label */}
+                  <TextArea
+                    label={noteLabel}
+                    name="confirmNote"
+                    id="confirmNote"
+                    placeholder="Masukkan catatan..."
+                    value={initialNote}
+                    onChange={onNoteChange}
+                    required={false}
+                    rows={3}
+                  />
+                </div>
+              )}
+
               <button
                 onClick={onClick}
                 data-modal-hide={"confirm-modal" + id}
@@ -104,4 +132,8 @@ ConfirmModal.propTypes = {
   labelOk: PropTypes.string,
   labelCancel: PropTypes.string,
   onClick: PropTypes.func,
+  showTextArea: PropTypes.bool,       // PropType baru
+  onNoteChange: PropTypes.func,      // PropType baru
+  initialNote: PropTypes.string,     // PropType baru
+  noteLabel: PropTypes.string        // PropType baru
 };
