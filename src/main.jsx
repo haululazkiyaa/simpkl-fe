@@ -16,6 +16,7 @@ import InstructorDailyMonitoringPage from "./pages/instructor/daily-monitoring/i
 import InstructorMonthlyMonitoringPage from "./pages/instructor/monthly-monitoring/index.jsx";
 import InstructorPage from "./pages/instructor/index.jsx";
 import LoginPage from "./pages/auth/login.jsx";
+import ProfilePage from "./pages/auth/profile.jsx";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import RegisterPage from "./pages/auth/regsiter.jsx";
@@ -42,6 +43,7 @@ import SupervisorPresencePage from "./pages/supervisor/presence/index.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <DashboardPage />, errorElement: <ErrorPage /> },
+  { path: "profile", element: <ProfilePage /> },
   { path: "login", element: <LoginPage /> },
   { path: "register", element: <RegisterPage /> },
   {

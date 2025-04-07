@@ -9,7 +9,7 @@ export default function ListMenu(props) {
       {menu.map((item, index) => (
         <ListMenu.Details
           key={index}
-          to={item.href}
+          href={item.href}
           label={item.label}
           variant={item.variant}
         />
@@ -36,11 +36,7 @@ export default function ListMenu(props) {
 }
 
 function Details(props) {
-  const {
-    href = "/",
-    label = "~ No label ~",
-    variant = "text-gray-700",
-  } = props;
+  const { href = "#", label = "No label", variant = "text-gray-700" } = props;
   return (
     <li>
       <Link
