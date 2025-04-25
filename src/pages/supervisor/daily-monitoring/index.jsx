@@ -9,6 +9,7 @@ import { getJurnalPembimbing } from "../../../services/supervisor/supervisor-mon
 import { refreshToken } from "../../../services/auth/auth.service";
 import { useNavigate } from "react-router-dom";
 
+
 export default function SupervisorDailyMonitoringPage() {
   const { setProgress } = useContext(AuthContext);
   const navigate = useNavigate();

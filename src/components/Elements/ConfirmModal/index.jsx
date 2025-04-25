@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import { initFlowbite } from "flowbite";
 import { useEffect } from "react";
-import TextArea from "../../../components/Elements/Logout/index.js"; // Pastikan path ini sesuai
+import TextArea from "../TextArea"; // Pastikan path ini sesuai
+
 
 export default function ConfirmModal(props) {
   const { 

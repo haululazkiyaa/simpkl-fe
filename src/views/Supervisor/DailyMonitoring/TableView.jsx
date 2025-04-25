@@ -10,6 +10,7 @@ import { setStatusJurnal } from "../../../services/supervisor/supervisor-monitor
 import { toast } from "react-toastify";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
 
 export default function SupervisorDailyMonitoringTableView(props) {
   const { data, selected, handleDataHarian, setSelected, tanggal, setTanggal } =
@@ -23,9 +24,9 @@ export default function SupervisorDailyMonitoringTableView(props) {
 
     console.log(selected);
     const data = {
-      id_jurnal: selected.id,
+      id: selected.id,
       status: option,
-      catatan: note,
+      catatan_pembimbing: note,
     };
 
     refreshToken((status, token) => {
@@ -188,13 +189,6 @@ export default function SupervisorDailyMonitoringTableView(props) {
                       item.status
                     )}
                   </td>
-                  <td className="w-16 px-3">
-                    <div className="flex items-center justify-center">
-                      <Button onClick={() => updateDrawer(item)}>
-                        <i className="fa-solid fa-comment-medical"></i>
-                      </Button>
-                    </div>
-                  </td>
                 </tr>
               ))
             ) : (
@@ -218,7 +212,7 @@ export default function SupervisorDailyMonitoringTableView(props) {
         onClick={() => handleStatusJurnal("Diterima")}
         id="1"
         showTextArea={true}
-        onNoteChange={setNote}
+        onNoteChange={(e)=>setNote(e.target.value)}
         initialNote={note}
         noteLabel="Catatan Pembimbing"
       />
@@ -229,7 +223,7 @@ export default function SupervisorDailyMonitoringTableView(props) {
         onClick={() => handleStatusJurnal("Ditolak")}
         id="2"
         showTextArea={true}
-        onNoteChange={setNote}
+        onNoteChange={(e)=>setNote(e.target.value)}
         initialNote={note}
         noteLabel="Catatan Pembimbing"
       />

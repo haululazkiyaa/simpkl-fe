@@ -44,7 +44,7 @@ export const setStatusJurnal = async (data, token, callback) => {
   console.log(data);
   await axiosReq
     .post(
-      `${import.meta.env.VITE_API_URL}/jurnal-harian/bimbingan/status`,
+      `${import.meta.env.VITE_API_URL}/jurnal-harian/approval-guru`,
       data,
       {
         headers: {
