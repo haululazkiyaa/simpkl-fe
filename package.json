@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@dotlottie/react-player": "^1.6.6",
+    "@tanstack/react-table": "^8.21.3",
     "@uidotdev/usehooks": "^2.4.1",
     "axios": "^1.6.1",
     "flowbite": "^2.1.1",
