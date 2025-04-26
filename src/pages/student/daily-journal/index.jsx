@@ -16,7 +16,7 @@ export default function StudentDailyJournalPage() {
   const { width, height } = useWindowSize();
   const navigate = useNavigate();
 
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const [selected, setSelected] = useState("");
   const [confetti, setConfetti] = useState(false);
   const [tanggal, setTanggal] = useState("");
@@ -54,7 +54,7 @@ export default function StudentDailyJournalPage() {
   }, [setProgress, navigate, setTanggal, tanggal]);
 
   useEffect(() => {
-    setData({});
+    setData([]);
     handleDataHarian();
   }, [handleDataHarian, tanggal]);
 
@@ -70,44 +70,39 @@ export default function StudentDailyJournalPage() {
     <>
       <div className="format max-w-none mb-5">
         <h1 className="dark:text-white">Jurnal Harian</h1>
-        <div className="flex-none flex-row lg:flex">
-          <div className="basis-2/6 lg:mr-5">
-            <p>
-              Anda dapat melihat Jurnal harian yang sudah Anda buat,
-              menambahkan, mengubah dan menghapus jurnal harian. Namun Anda
-              hanya dibatasi untuk membuat satu jurnal per hari. Anda juga dapat
-              melihat komentar yang diberikan oleh Guru Pembimbing dan
-              Instruktur disini.
-            </p>
-          </div>
-          <div className="basis-4/6">
-            <div className="not-format">
-              <StudentDailyJournalTableView
-                handleDataHarian={handleDataHarian}
-                setData={setData}
-                data={data}
-                setSelected={setSelected}
-                tanggal={tanggal}
-                setTanggal={setTanggal}
-                today={today}
-                selected={selected}
-                setConfetti={setConfetti}
-              />
-              <StudentDailyJournalUpdateDrawerView
-                handleDataHarian={handleDataHarian}
-                selected={selected}
-                id="1"
-              />
-              <StudentDailyJournalDetailView data={data} selected={selected} />
-              {confetti && (
-                <ReactConfetti
-                  width={width - 20}
-                  height={height}
-                  recycle={false}
-                />
-              )}
-            </div>
-          </div>
+        <p>
+          Anda dapat melihat Jurnal harian yang sudah Anda buat,
+          menambahkan, mengubah dan menghapus jurnal harian. Namun Anda
+          hanya dibatasi untuk membuat satu jurnal per hari. Anda juga dapat
+          melihat komentar yang diberikan oleh Guru Pembimbing dan
+          Instruktur disini.
+        </p>
+        
+        <div className="not-format">
+          <StudentDailyJournalTableView
+            handleDataHarian={handleDataHarian}
+            setData={setData}
+            data={data}
+            setSelected={setSelected}
+            tanggal={tanggal}
+            setTanggal={setTanggal}
+            today={today}
+            selected={selected}
+            setConfetti={setConfetti}
+          />
+          <StudentDailyJournalUpdateDrawerView
+            handleDataHarian={handleDataHarian}
+            selected={selected}
+            id="1"
+          />
+          <StudentDailyJournalDetailView data={data} selected={selected} />
+          {confetti && (
+            <ReactConfetti
+              width={width - 20}
+              height={height}
+              recycle={false}
+            />
+          )}
         </div>
       </div>
     </>

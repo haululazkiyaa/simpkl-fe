@@ -311,12 +311,12 @@ export default function StudentDailyJournalUpdateDrawerView(props) {
                   Loading...
                 </>
               ) : (
-                "Tambahkan"
+                "Simpan"
               )}
             </Button>
           </form>
         ) : (
-          <SuccessBadge id={id}>Berhasil menambahkan data!</SuccessBadge>
+          <SuccessBadge id={id}>Berhasil mengubah data!</SuccessBadge>
         )}
       </Drawer>
     </>

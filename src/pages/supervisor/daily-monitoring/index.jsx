@@ -1,5 +1,4 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-
 import { AuthContext } from "../../../context/AuthContext";
 import Logout from "../../../components/Elements/Logout";
 import SupervisorDailyMonitoringCommentView from "../../../views/Supervisor/DailyMonitoring/CommentView";
@@ -9,6 +8,7 @@ import SupervisorDailyMonitoringUpdateDrawerView from "../../../views/Supervisor
 import { getJurnalPembimbing } from "../../../services/supervisor/supervisor-monitoring.service";
 import { refreshToken } from "../../../services/auth/auth.service";
 import { useNavigate } from "react-router-dom";
+
 
 export default function SupervisorDailyMonitoringPage() {
   const { setProgress } = useContext(AuthContext);
@@ -65,9 +65,11 @@ export default function SupervisorDailyMonitoringPage() {
         <div className="not-format">
           <SupervisorDailyMonitoringTableView
             data={data}
+            selected={selected}
             setSelected={setSelected}
             tanggal={tanggal}
             setTanggal={setTanggal}
+            handleDataHarian={handleDataHarian}
           />
           <SupervisorDailyMonitoringUpdateDrawerView
             handleDataHarian={handleDataHarian}

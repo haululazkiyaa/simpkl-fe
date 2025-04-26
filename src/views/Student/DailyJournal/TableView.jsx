@@ -46,7 +46,7 @@ export default function StudentDailyJournalTableView(props) {
               draggable: true,
               progress: undefined,
             });
-            setData({});
+            setData([]);
             handleDataHarian();
           } else {
             toast.error("Gagal menghapus jurnal harian!", {
@@ -125,6 +125,7 @@ export default function StudentDailyJournalTableView(props) {
               Pilih Tanggal:
             </label>
           )}
+
           <Input
             type="date"
             name="tanggal"
@@ -137,163 +138,122 @@ export default function StudentDailyJournalTableView(props) {
         </div>
         {Object.keys(data).length != 0 && tanggal == today && (
           <div className="space-x-2 mb-5">
-            <Button variant="yellow" onClick={() => updateDrawer(data)}>
-              <i className="fa-solid fa-pen mr-2"></i>
-              Edit
-            </Button>
-            <Button variant="red" onClick={() => initModal1(data)}>
-              <i className="fa-solid fa-trash mr-2"></i>
-              Hapus
-            </Button>
+            <StudentDailyJournalAddDrawerView
+              handleDataHarian={handleDataHarian}
+              setConfetti={setConfetti}
+              id="0"
+            />
           </div>
         )}
       </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400 ">
-          <tbody>
-            {Object.keys(data).length != 0 && (
-              <>
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 dark:text-white text-left"
+        {Object.keys(data).length != 0 && (
+          <table className="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400 ">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" className="w-16 px-3">
+                  No.
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Jenis Pekerjaan
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Deskripsi Pekerjaan
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Status
+                </th>
+                <th scope="col" className="w-32 px-3">
+                  Catatan Pembimbing
+                </th>
+                <th scope="col" className="w-32 px-3">
+                  Lihat Jurnal
+                </th>
+                <th scope="col" className="w-32 px-3">
+                  Aksi
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.length != 0 ? (
+                data.map((item, index) => (
+                  <tr
+                    key={index}
+                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                   >
-                    Hari/Tanggal
-                  </th>
-                  <td className="px-6 py-4 text-left">
-                    : {data.hari},{" "}
-                    {new Date(data.tanggal).toLocaleString("id-ID", {
-                      day: "numeric",
-                      month: "long",
-                      year: "numeric",
-                    })}
-                  </td>
-                </tr>
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 dark:text-white text-left"
-                  >
-                    Jenis Pekerjaan
-                  </th>
-                  <td className="px-6 py-4 text-left">
-                    : {data.jenis_pekerjaan}
-                  </td>
-                </tr>
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 dark:text-white text-left"
-                  >
-                    Deskripsi Pekerjaan
-                  </th>
-                  <td className="px-6 py-4 text-left">
-                    : {data.deskripsi_pekerjaan}
-                  </td>
-                </tr>
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 dark:text-white text-left"
-                  >
-                    Bentuk Kegiatan
-                  </th>
-                  <td className="px-6 py-4 text-left">
-                    : {data.bentuk_kegiatan}
-                  </td>
-                </tr>
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 dark:text-white text-left"
-                  >
-                    Jam Mulai
-                  </th>
-                  <td className="px-6 py-4 text-left">
-                    :{" "}
-                    {String(new Date(data.jam_mulai).getUTCHours()).padStart(
-                      2,
-                      "0"
-                    )}
-                    .
-                    {String(new Date(data.jam_mulai).getUTCMinutes()).padStart(
-                      2,
-                      "0"
-                    )}{" "}
-                    WIB
-                  </td>
-                </tr>
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 dark:text-white text-left"
-                  >
-                    Jam Selesai
-                  </th>
-                  <td className="px-6 py-4 text-left">
-                    :{" "}
-                    {String(new Date(data.jam_selesai).getUTCHours()).padStart(
-                      2,
-                      "0"
-                    )}
-                    .
-                    {String(
-                      new Date(data.jam_selesai).getUTCMinutes()
-                    ).padStart(2, "0")}{" "}
-                    WIB
-                  </td>
-                </tr>
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 dark:text-white text-left"
-                  >
-                    Staff Yang Menugaskan
-                  </th>
-                  <td className="px-6 py-4 text-left">: {data.staf}</td>
-                </tr>
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 dark:text-white text-left"
-                  >
-                    Catatan Pembimbing
-                  </th>
-                  <td className="px-6 py-4 text-left">
-                    : {data.catatan_pembimbing || "Belum ada catatan"}
-                  </td>
-                </tr>
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 dark:text-white text-left"
-                  >
-                    Catatan Instruktur
-                  </th>
-                  <td className="px-6 py-4 text-left">
-                    : {data.catatan_instruktur || "Belum ada catatan"}
-                  </td>
-                </tr>
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 dark:text-white text-left"
-                  >
-                    Foto Kegiatan
-                  </th>
-                  <td className="px-3 py-2 text-left">
-                    <Button
-                      variant="default"
-                      onClick={() => initStaticModal(data)}
+                    <th
+                      scope="row"
+                      className="w-16 px-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                      <i className="fa-solid fa-eye mr-2"></i>Lihat
-                    </Button>
+                      {index + 1}
+                    </th>
+                    <td className="w-100 px-6 py-4 text-center">
+                      {item.jenis_pekerjaan}
+                    </td>
+                    <td className="px-6 py-4 text-center">
+                      {item.deskripsi_pekerjaan}
+                    </td>
+                    <td className="px-6 py-4 text-center">
+                      <span
+                        className={`text-sm font-medium me-2 px-2.5 py-0.5 rounded border ${
+                          item.status.toUpperCase() === "MENUNGGU"
+                            ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300 border-yellow-400"
+                            : item.status === "DITOLAK"
+                            ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300 border-red-400"
+                            : item.status === "DITERIMA"
+                            ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 border-green-400"
+                            : ""
+                        }`}
+                      >
+                        {item.status}
+                      </span>
+                    </td>
+                    <td className="w-100 px-3">
+                      <div className="flex items-center justify-center">
+                        {item.catatan_pembimbing
+                          ? item.catatan_pembimbing
+                          : "Tidak ada catatan"}
+                      </div>
+                    </td>
+                    <td className="px-3">
+                      <div className="flex items-center justify-center">
+                        <Button
+                          outline={true}
+                          onClick={() => initStaticModal(item)}
+                        >
+                          <i className="fa-solid fa-eye mr-1"></i>Lihat
+                        </Button>
+                      </div>
+                    </td>
+                    <td className="px-3">
+                      <div className="flex items-center justify-center space-x-3">
+                        <Button
+                          variant="yellow"
+                          onClick={() => updateDrawer(item)}
+                        >
+                          <i className="fa-solid fa-pen"></i>
+                        </Button>
+
+                        <Button variant="red" onClick={() => initModal1(item)}>
+                          <i className="fa-solid fa-trash"></i>
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={8}>
+                    <NotFound />
+                    <h3 className="text-xl text-black font-bold mb-5 dark:text-white">
+                      Opps! Tidak ada jurnal yang kamu submit di tanggal ini.
+                    </h3>
                   </td>
                 </tr>
-              </>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        )}
       </div>
       <ConfirmModal
         desc={`Apakah anda yakin ingin mengapus jurnal hari ini?`}

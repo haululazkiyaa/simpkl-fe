@@ -31,11 +31,11 @@ export default function AuthLayout(props) {
 
   return (
     <>
-      <section className="bg-center bg-no-repeat bg-cover sm:bg-[url('https://is3.cloudhost.id/tplum/bg-1.jpg')] h-screen sm:h-auto">
+      <section className="bg-center bg-no-repeat bg-cover sm:bg-[url('https://masulyablog.sirv.com/bg.png')] h-screen sm:h-auto">
         <div className="flex flex-col items-end justify-center mx-auto lg:py-0">
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 h-screen">
             <div className="w-full h-full flex flex-col overflow-y-auto">
-              <div className="flex-none sm:flex-1 bg-center bg-no-repeat bg-cover bg-[url('https://is3.cloudhost.id/tplum/bg-1.jpg')] sm:bg-none h-1/4"></div>
+              <div className="flex-none sm:flex-1 bg-center bg-no-repeat bg-cover bg-[url('https://masulyablog.sirv.com/bg.png')] sm:bg-none h-1/4"></div>
               <div className="flex-none">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                   <Logo />

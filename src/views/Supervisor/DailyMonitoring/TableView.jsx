@@ -1,20 +1,93 @@
+import { AuthContext } from "../../../context/AuthContext.jsx";
 import Button from "../../../components/Elements/Button/index.jsx";
+import ConfirmModal from "../../../components/Elements/ConfirmModal/index.jsx";
 import Input from "../../../components/Elements/Input/index.jsx";
+import Logout from "../../../components/Elements/Logout/index.js";
 import NotFound from "../../../components/Elements/EmptyState/NotFound.jsx";
 import PropTypes from "prop-types";
+import { refreshToken } from "../../../services/auth/auth.service.js";
+import { setStatusJurnal } from "../../../services/supervisor/supervisor-monitoring.service.js";
+import { toast } from "react-toastify";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
 
 export default function SupervisorDailyMonitoringTableView(props) {
-  const { data, setSelected, tanggal, setTanggal } = props;
+  const { data, selected, handleDataHarian, setSelected, tanggal, setTanggal } =
+    props;
+  const { setProgress } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [note, setNote] = useState("");
+
+  const handleStatusJurnal = (option) => {
+    setProgress(30);
+
+    console.log(selected);
+    const data = {
+      id: selected.id,
+      status: option,
+      catatan_pembimbing: note,
+    };
+
+    refreshToken((status, token) => {
+      if (status) {
+        setProgress(60);
+        setStatusJurnal(data, token, (status, message) => {
+          if (status) {
+            toast.success(message, {
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+            handleDataHarian();
+            setNote("");
+          } else {
+            toast.error(message, {
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+          }
+        });
+      } else {
+        Logout((status) => {
+          if (status) {
+            navigate("/login");
+          }
+        });
+      }
+      setProgress(100);
+    });
+  };
 
   const initStaticModal = (item) => {
     setSelected(item);
     document.getElementById("init-static-modal").click();
   };
 
-  const initStaticModal1 = (item) => {
+  const initModal1 = (item) => {
     setSelected(item);
-    document.getElementById("init-static-modal1").click();
+    setNote(item.catatan_pembimbing || "");
+    console.log(selected);
+    document.getElementById("init-modal1").click();
   };
+
+  const initModal2 = (item) => {
+    setSelected(item);
+    setNote(item.catatan_pembimbing || "");
+    document.getElementById("init-modal2").click();
+  };
+
+  // const initStaticModal1 = (item) => {
+  //   setSelected(item);
+  //   document.getElementById("init-static-modal1").click();
+  // };
 
   const updateDrawer = (item) => {
     setSelected(item);
@@ -52,20 +125,14 @@ export default function SupervisorDailyMonitoringTableView(props) {
               <th scope="col" className="px-6 py-3">
                 Perusahaan
               </th>
-              <th scope="col" className="px-6 py-3">
-                Instruktur
-              </th>
               <th scope="col" className="w-32 px-3">
                 Jurnal Harian
               </th>
               <th scope="col" className="w-32 px-3">
-                Catatan Instruktur
-              </th>
-              <th scope="col" className="w-32 px-3">
                 Catatan Anda
               </th>
-              <th scope="col" className="w-16 px-3">
-                Berikan Catatan
+              <th scope="col" className="w-32 px-3">
+                Status
               </th>
             </tr>
           </thead>
@@ -88,9 +155,6 @@ export default function SupervisorDailyMonitoringTableView(props) {
                   <td className="px-6 py-4 truncate text-left">
                     {item.kelompok_bimbingan?.perusahaan?.nama_perusahaan}
                   </td>
-                  <td className="px-6 py-4 truncate text-left">
-                    {item.kelompok_bimbingan?.instruktur?.nama}
-                  </td>
                   <td className="w-32 px-3">
                     <div className="flex items-center justify-center">
                       <Button
@@ -103,38 +167,27 @@ export default function SupervisorDailyMonitoringTableView(props) {
                   </td>
                   <td className="w-32 px-3">
                     <div className="flex items-center justify-center">
-                      {item.catatan_instruktur ? (
-                        <Button
-                          outline={true}
-                          onClick={() => initStaticModal1(item)}
-                        >
-                          <i className="fa-solid fa-eye mr-2"></i>Lihat
-                        </Button>
-                      ) : (
-                        "Tidak ada catatan"
-                      )}
+                      {item.catatan_pembimbing
+                        ? item.catatan_pembimbing
+                        : "Tidak ada catatan"}
                     </div>
                   </td>
-                  <td className="w-32 px-3">
-                    <div className="flex items-center justify-center">
-                      {item.catatan_pembimbing ? (
+                  <td className="px-6 py-4 truncate text-left">
+                    {item.status.toUpperCase() === "MENUNGGU" ? (
+                      <div className="flex items-center justify-center space-x-2">
                         <Button
-                          outline={true}
-                          onClick={() => initStaticModal1(item)}
+                          variant="green"
+                          onClick={() => initModal1(item)}
                         >
-                          <i className="fa-solid fa-eye mr-2"></i>Lihat
+                          <i className="fa-solid fa-check"></i>
                         </Button>
-                      ) : (
-                        "Tidak ada catatan"
-                      )}
-                    </div>
-                  </td>
-                  <td className="w-16 px-3">
-                    <div className="flex items-center justify-center">
-                      <Button onClick={() => updateDrawer(item)}>
-                        <i className="fa-solid fa-comment-medical"></i>
-                      </Button>
-                    </div>
+                        <Button variant="red" onClick={() => initModal2(item)}>
+                          <i className="fa-solid fa-xmark"></i>
+                        </Button>
+                      </div>
+                    ) : (
+                      item.status
+                    )}
                   </td>
                 </tr>
               ))
@@ -151,6 +204,29 @@ export default function SupervisorDailyMonitoringTableView(props) {
           </tbody>
         </table>
       </div>
+
+      <ConfirmModal
+        desc={`Apakah anda yakin menyetujui jurnal ini?`}
+        labelOk="Ya"
+        labelCancel="Tidak"
+        onClick={() => handleStatusJurnal("Diterima")}
+        id="1"
+        showTextArea={true}
+        onNoteChange={(e)=>setNote(e.target.value)}
+        initialNote={note}
+        noteLabel="Catatan Pembimbing"
+      />
+      <ConfirmModal
+        desc={`Apakah anda yakin menolak jurnal ini?`}
+        labelOk="Ya"
+        labelCancel="Tidak"
+        onClick={() => handleStatusJurnal("Ditolak")}
+        id="2"
+        showTextArea={true}
+        onNoteChange={(e)=>setNote(e.target.value)}
+        initialNote={note}
+        noteLabel="Catatan Pembimbing"
+      />
     </>
   );
 }
@@ -161,4 +237,6 @@ SupervisorDailyMonitoringTableView.propTypes = {
   id: PropTypes.string,
   tanggal: PropTypes.any,
   setTanggal: PropTypes.any,
+  handleDataHarian: PropTypes.func,
+  selected: PropTypes.any,
 };

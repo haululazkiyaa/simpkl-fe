@@ -4,6 +4,7 @@ import Alert from "../../../components/Elements/Alert/index.jsx";
 import { AuthContext } from "../../../context/AuthContext.jsx";
 import Button from "../../../components/Elements/Button/index.jsx";
 import Drawer from "../../../components/Elements/Drawer/index.jsx";
+import FileInput from "../../../components/Elements/FileInput/index.jsx";
 import Input from "../../../components/Elements/Input/index.jsx";
 import Logout from "../../../components/Elements/Logout/index.js";
 import PropTypes from "prop-types";
@@ -29,6 +30,8 @@ export default function CompanyDataAddDrawerView(props) {
   const [alamat, setAlamat] = useState("");
   const [email, setEmail] = useState("");
   const [web, setWeb] = useState("");
+  const [foto, setFoto] = useState("");
+  const [previewFoto, setPreviewFoto] = useState("");
 
   // handle message
   const [message, setMessage] = useState("");
@@ -46,6 +49,7 @@ export default function CompanyDataAddDrawerView(props) {
       alamat: alamat,
       email: email,
       website: web,
+      foto: foto
     };
     refreshToken((status, token) => {
       if (status) {
@@ -72,6 +76,8 @@ export default function CompanyDataAddDrawerView(props) {
             setAlamat("");
             setEmail("");
             setWeb("");
+            setFoto("");
+            setPreviewFoto("");
           } else {
             setMessage(message);
             toast.error("Gagal menambahkan perusahaan!", {
@@ -99,6 +105,11 @@ export default function CompanyDataAddDrawerView(props) {
   const initDrawer = () => {
     setMessage("");
     document.getElementById("init-drawer" + id).click();
+  };
+
+  const selectFile = (e) => {
+    setFoto(e.target.files[0]);
+    setPreviewFoto(URL.createObjectURL(e.target.files[0]));
   };
 
   return (
@@ -172,6 +183,30 @@ export default function CompanyDataAddDrawerView(props) {
               onChange={(e) => setWeb(e.target.value)}
               required={true}
             />
+            {previewFoto == "" ? (
+              <FileInput
+                id="foto"
+                name="foto"
+                label="Unggah Foto"
+                onChange={(e) => selectFile(e)}
+                required={true}
+              />
+            ) : (
+              <>
+                <img src={previewFoto} alt="Foto Perusahaan" />
+                <Button
+                  variant="red"
+                  width="full"
+                  outline={true}
+                  onClick={() => {
+                    setPreviewFoto("");
+                    setFoto("");
+                  }}
+                >
+                  Reset Gambar
+                </Button>
+              </>
+            )}
             <Input
               type="text"
               label="Buat Username"

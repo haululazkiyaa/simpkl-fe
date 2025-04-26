@@ -270,7 +270,7 @@ export default function GuidanceGroupUpdateDrawerView(props) {
             </Button>
           </form>
         ) : (
-          <SuccessBadge id={id}>Berhasil menambahkan data!</SuccessBadge>
+          <SuccessBadge id={id}>Berhasil mengubah data!</SuccessBadge>
         )}
       </Drawer>
     </>

@@ -1,7 +1,45 @@
+import { useCallback, useContext, useEffect, useState } from "react";
 import DashboardLayout from "../../components/Layouts/DashboardLayout";
 import PropTypes from "prop-types";
+import { getAnnouncement } from "../../services/school-admin/announcement-data.service";
+
+import { AuthContext } from "../../context/AuthContext";
+import Logout from "../../components/Elements/Logout";
+import { refreshToken } from "../../services/auth/auth.service";
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardPage() {
+  const { setProgress } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const [pengumuman, setPengumuman] = useState([]);
+
+  const handleDataPengumuman = useCallback(() => {
+    setProgress(30);
+    refreshToken((status, token) => {
+      if (status) {
+        setProgress(60);
+        getAnnouncement(token, (status, data) => {
+          if (status) {
+            const activeAnnouncements = data.filter((item) => item.status === true);
+            setPengumuman(activeAnnouncements);
+          }
+        });
+      } else {
+        Logout((status) => {
+          if (status) {
+            navigate("/login");
+          }
+        });
+      }
+      setProgress(100);
+    });
+  }, [setProgress, navigate]);
+
+  useEffect(() => {
+    handleDataPengumuman();
+  }, [handleDataPengumuman]);
+
   return (
     <DashboardLayout>
       <div className="max-w-none mb-5">
@@ -19,7 +57,7 @@ export default function DashboardPage() {
                     data-carousel-item
                   >
                     <img
-                      src={import.meta.env.VITE_SLIDER_CONTENT}
+                      src="https://masulyablog.sirv.com/slider.png"
                       className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                       alt="..."
                     />
@@ -29,7 +67,7 @@ export default function DashboardPage() {
                     data-carousel-item
                   >
                     <img
-                      src={import.meta.env.VITE_SLIDER_CONTENT}
+                      src="https://masulyablog.sirv.com/slider.png"
                       className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                       alt="..."
                     />
@@ -39,7 +77,7 @@ export default function DashboardPage() {
                     data-carousel-item
                   >
                     <img
-                      src={import.meta.env.VITE_SLIDER_CONTENT}
+                      src="https://masulyablog.sirv.com/slider.png"
                       className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                       alt="..."
                     />
@@ -49,7 +87,7 @@ export default function DashboardPage() {
                     data-carousel-item
                   >
                     <img
-                      src={import.meta.env.VITE_SLIDER_CONTENT}
+                      src="https://masulyablog.sirv.com/slider.png"
                       className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                       alt="..."
                     />
@@ -59,7 +97,7 @@ export default function DashboardPage() {
                     data-carousel-item
                   >
                     <img
-                      src={import.meta.env.VITE_SLIDER_CONTENT}
+                      src="https://masulyablog.sirv.com/slider.png"
                       className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                       alt="..."
                     />
@@ -118,7 +156,7 @@ export default function DashboardPage() {
           </div>
           <div className="basis-2/6">
             <div className="rounded-lg p-3 bg-white border border-gray-200 shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 border-t-4 border-t-blue-500">
-              <h2 className="font-bold text-lg">Pemberitahuan</h2>
+              <h2 className="font-bold text-lg">Pengumuman</h2>
               {/* <p className="text-gray-500 dark:text-white border-b border-neutral-100 my-2 pb-2">
                 <span className="text-black">28 Desember 2023</span> - Peserta
                 magang harap segera melakukan konfirmasi kepada guru pembimbing
@@ -129,11 +167,21 @@ export default function DashboardPage() {
                 magang harap segera melakukan konfirmasi kepada guru pembimbing
                 terkait perusahaannya.
               </p> */}
-              <p className="text-gray-500 dark:text-white my-2 pb-2">
-                {import.meta.env.VITE_DASHOBARD_INFO
-                  ? import.meta.env.VITE_DASHOBARD_INFO
-                  : "Tidak ada pemberitahuan"}
-              </p>
+              {pengumuman.length > 0 ? (
+                pengumuman.map((item, index) => (
+                  <p key={index} className="text-gray-500 dark:text-white border-b border-neutral-100 my-2 pb-2">
+                    <span className="text-black">
+                      {new Date(item.createdAt).toLocaleString("id-ID", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </span> - {item.pengumuman}
+                  </p>
+                ))
+              ) : (
+                <p className="text-gray-500 dark:text-white my-2 pb-2">Tidak ada pengumuman</p>
+              )}
             </div>
           </div>
         </div>

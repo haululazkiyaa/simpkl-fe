@@ -8,6 +8,7 @@ import Logout from "../../../components/Elements/Logout/index.js";
 import { getPerusahaan } from "../../../services/company-admin/company-data.service.js";
 import { refreshToken } from "../../../services/auth/auth.service.js";
 import { useNavigate } from "react-router-dom";
+import CompanyDetailView from "../../../views/SchoolAdmin/CompanyData/DetailView.jsx";
 
 export default function SchoolAdminCompanyDataPage() {
   const { setProgress } = useContext(AuthContext);
@@ -62,6 +63,8 @@ export default function SchoolAdminCompanyDataPage() {
             setSelected={setSelected}
             handleDataPerusahaan={handleDataPerusahaan}
           />
+          <CompanyDetailView data={data} selected={selected} />
+            
           <CompanyDataUpdateDrawerView
             handleDataPerusahaan={handleDataPerusahaan}
             selected={selected}

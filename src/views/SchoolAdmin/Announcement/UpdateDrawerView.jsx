@@ -7,14 +7,14 @@ import Drawer from "../../../components/Elements/Drawer/index.jsx";
 import Logout from "../../../components/Elements/Logout/index.js";
 import PropTypes from "prop-types";
 import SuccessBadge from "../../../components/Elements/SuccessBadge/index.jsx";
-import TextArea from "../../../components/Elements/TextArea/index.jsx";
-import { addCatatanPembimbing } from "../../../services/supervisor/supervisor-monitoring.service.js";
 import { refreshToken } from "../../../services/auth/auth.service.js";
 import { toast } from "react-toastify";
+import { updateAnnouncement } from "../../../services/school-admin/announcement-data.service.js";
 import { useNavigate } from "react-router-dom";
+import TextArea from "../../../components/Elements/TextArea/index.jsx";
 
-export default function SupervisorDailyMonitoringUpdateDrawerView(props) {
-  const { handleDataHarian, selected, id } = props;
+export default function AnnouncementDataUpdateDrawerView(props) {
+  const { handleDataPengumuman, selected, id } = props;
   const { setProgress } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -22,26 +22,26 @@ export default function SupervisorDailyMonitoringUpdateDrawerView(props) {
   const [loading, setLoading] = useState(false);
 
   // handle input
-  const [catatan, setCatatan] = useState("");
+  const [pengumuman, setPengumuman] = useState("");
 
   // handle message
   const [message, setMessage] = useState("");
 
-  const handleTambahCatatan = (e) => {
+  const handleUpdatePengumuman = (e) => {
     e.preventDefault();
     setProgress(30);
     setLoading(true);
     setMessage("");
     const data = {
       id: selected.id,
-      catatan: catatan,
+      pengumuman: pengumuman,
     };
     refreshToken((status, token) => {
       if (status) {
         setProgress(60);
-        addCatatanPembimbing(data, token, (status, message) => {
+        updateAnnouncement(data, token, (status, message) => {
           if (status) {
-            toast.success(`Sukses! Catatan pembimbing diperbarui.`, {
+            toast.success(`Sukses! Data pengumuman diperbarui.`, {
               autoClose: 3000,
               hideProgressBar: false,
               closeOnClick: true,
@@ -49,11 +49,11 @@ export default function SupervisorDailyMonitoringUpdateDrawerView(props) {
               draggable: true,
               progress: undefined,
             });
-            handleDataHarian();
+            handleDataPengumuman();
             setMessage("success");
           } else {
             setMessage(message);
-            toast.error("Gagal memperbarui catatan pembimbing!", {
+            toast.error("Gagal memperbarui data pengumuman!", {
               autoClose: 3000,
               hideProgressBar: false,
               closeOnClick: true,
@@ -76,7 +76,7 @@ export default function SupervisorDailyMonitoringUpdateDrawerView(props) {
   };
 
   useEffect(() => {
-    setCatatan(selected?.catatan_pembimbing);
+    setPengumuman(selected?.pengumuman);
   }, [selected]);
 
   const getDetails = () => {
@@ -93,19 +93,20 @@ export default function SupervisorDailyMonitoringUpdateDrawerView(props) {
           getDetails();
         }}
       ></button>
-      <Drawer title="Berikan Catatan" id={id}>
+      <Drawer title="Update Data Pengumuman" id={id}>
         {message != "success" ? (
           <form
             className="space-y-4 md:space-y-6"
-            onSubmit={(e) => handleTambahCatatan(e)}
+            onSubmit={(e) => handleUpdatePengumuman(e)}
           >
             <TextArea
-              label="Catatan Pembimbing"
-              name="catatan"
-              id="catatan"
-              placeholder="Masukan catatan pembimbing"
-              value={catatan}
-              onChange={(e) => setCatatan(e.target.value)}
+              type="text"
+              label="Pengumuman"
+              name="pengumuman"
+              id="pengumuman"
+              placeholder="Masukan Pengumuman"
+              value={pengumuman}
+              onChange={(e) => setPengumuman(e.target.value)}
               required={true}
             />
             <Alert>{message}</Alert>
@@ -137,17 +138,16 @@ export default function SupervisorDailyMonitoringUpdateDrawerView(props) {
             </Button>
           </form>
         ) : (
-          <SuccessBadge id={id}>Berhasil menambahkan data!</SuccessBadge>
+          <SuccessBadge id={id}>Berhasil mengubah data!</SuccessBadge>
         )}
       </Drawer>
     </>
   );
 }
 
-SupervisorDailyMonitoringUpdateDrawerView.propTypes = {
+AnnouncementDataUpdateDrawerView.propTypes = {
   data: PropTypes.any,
-  handleDataHarian: PropTypes.func,
+  handleDataPengumuman: PropTypes.func,
   selected: PropTypes.any,
   id: PropTypes.string,
 };
-

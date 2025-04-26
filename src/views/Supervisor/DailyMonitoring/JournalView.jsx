@@ -77,14 +77,9 @@ export default function SupervisorDailyMonitoringJournalView(props) {
                     Jam Mulai
                   </th>
                   <td className="px-6 py-4 text-left">
-                    :{" "}
-                    {String(
-                      new Date(selected.jam_mulai).getUTCHours()
-                    ).padStart(2, "0") +
-                      ":" +
-                      String(
-                        new Date(selected.jam_mulai).getUTCMinutes()
-                      ).padStart(2, "0")}{" "}
+                    :{
+                        " " + selected.jam_mulai + " "
+                    }
                     WIB
                   </td>
                 </tr>
@@ -96,14 +91,9 @@ export default function SupervisorDailyMonitoringJournalView(props) {
                     Jam Selesai
                   </th>
                   <td className="px-6 py-4 text-left">
-                    :{" "}
-                    {String(
-                      new Date(selected.jam_selesai).getUTCHours()
-                    ).padStart(2, "0") +
-                      ":" +
-                      String(
-                        new Date(selected.jam_selesai).getUTCMinutes()
-                      ).padStart(2, "0")}{" "}
+                    :{
+                        " " + selected.jam_selesai + " "
+                    }
                     WIB
                   </td>
                 </tr>
