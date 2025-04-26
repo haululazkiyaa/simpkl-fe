@@ -5,6 +5,7 @@ import Logout from "../../../components/Elements/Logout";
 import SupervisorDataAddDrawerView from "../../../views/SchoolAdmin/SupervisorData/AddDrawerView";
 import SupervisorDataTableView from "../../../views/SchoolAdmin/SupervisorData/TableView";
 import SupervisorDataUpdateDrawerView from "../../../views/SchoolAdmin/SupervisorData/UpdateDrawerView";
+import UploadExcelDrawerView from "../../../views/SchoolAdmin/SupervisorData/UploadExcelDrawerView";
 import { getPembimbing } from "../../../services/school-admin/supervisor-data.service";
 import { refreshToken } from "../../../services/auth/auth.service";
 import { useNavigate } from "react-router-dom";
@@ -50,10 +51,14 @@ export default function SchoolAdminSupervisorDataPage() {
           mengubah data dan status aktif, serta menghapus data Guru Pembimbing.
         </p>
         <div className="not-format">
-          <div className="mb-5">
+          <div className="mb-5 space-x-3">
             <SupervisorDataAddDrawerView
               handleDataPembimbing={handleDataPembimbing}
               id="0"
+            />
+            <UploadExcelDrawerView
+              handleDataSiswa={handleDataPembimbing}
+              id="2"
             />
           </div>
           <SupervisorDataTableView

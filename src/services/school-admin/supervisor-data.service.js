@@ -76,3 +76,19 @@ export const deletePembimbing = async (data, token, callback) => {
       callback(false, error.response.data.message);
     });
 };
+
+export const importExcelGuru = async (formData, token, callback) => {
+  await axiosReq
+    .post(`${import.meta.env.VITE_API_URL}/siswa/import-excel`, formData, {
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res) => {
+      callback(true, res.data.message);
+    })
+    .catch((error) => {
+      callback(false, error.response?.data.message);
+    });
+};

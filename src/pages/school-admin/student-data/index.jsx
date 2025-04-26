@@ -5,6 +5,7 @@ import Logout from "../../../components/Elements/Logout";
 import StudentDataAddDrawerView from "../../..//views/SchoolAdmin/StudentData/AddDrawerView.jsx";
 import StudentDataTableView from "../../..//views/SchoolAdmin/StudentData/TableView.jsx";
 import StudentDataUpdateDrawerView from "../../../views/SchoolAdmin/StudentData/UpdateDrawerView";
+import UploadExcelDrawerView from "../../../views/SchoolAdmin/StudentData/UploadExcelDrawerView.jsx";
 import { getSiswa } from "../../../services/school-admin/student-data.service";
 import { refreshToken } from "../../../services/auth/auth.service";
 import { useNavigate } from "react-router-dom";
@@ -50,11 +51,12 @@ export default function SchoolAdminStudentDataPage() {
           data dan status aktif, serta menghapus data Siswa
         </p>
         <div className="not-format">
-          <div className="mb-5">
+          <div className="mb-5 space-x-3">
             <StudentDataAddDrawerView
               handleDataSiswa={handleDataSiswa}
               id="0"
             />
+            <UploadExcelDrawerView handleDataSiswa={handleDataSiswa} id="2" />
           </div>
           <StudentDataTableView
             data={data}
