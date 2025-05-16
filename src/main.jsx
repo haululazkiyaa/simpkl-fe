@@ -20,6 +20,8 @@ import ProfilePage from "./pages/auth/profile.jsx";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import RegisterPage from "./pages/auth/regsiter.jsx";
+import ResetPassword from "./pages/auth/reset-password.jsx";
+import SchoolAdminAnnouncementDataPage from "./pages/school-admin/announcement/index.jsx";
 import SchoolAdminAssesmentPage from "./pages/school-admin/assesment/index.jsx";
 import SchoolAdminCompanyDataPage from "./pages/school-admin/company-data/index.jsx";
 import SchoolAdminGuidanceGroupPage from "./pages/school-admin/guidance-group/index.jsx";
@@ -34,17 +36,17 @@ import StudentMonthlyGradePage from "./pages/student/monthly-grade/index.jsx";
 import StudentMonthlyJournalPage from "./pages/student/monthly-journal/index.jsx";
 import StudentPage from "./pages/student/index.jsx";
 import StudentPresencePage from "./pages/student/presence/index.jsx";
+import SupervisorDailyMonitoringPage from "./pages/supervisor/daily-monitoring/index.jsx";
 import SupervisorFinalAssesmentPage from "./pages/supervisor/final-assesment/index.jsx";
 import SupervisorMonthlyAssesmentPage from "./pages/supervisor/monthly-assesment/index.jsx";
+import SupervisorMonthlyMonitoringPage from "./pages/instructor/monthly-monitoring/index.jsx";
 import SupervisorPage from "./pages/supervisor/index.jsx";
 import SupervisorPresencePage from "./pages/supervisor/presence/index.jsx";
-import SupervisorDailyMonitoringPage from "./pages/supervisor/daily-monitoring/index.jsx"
-import SchoolAdminAnnouncementDataPage from "./pages/school-admin/announcement/index.jsx"
-import SupervisorMonthlyMonitoringPage from "./pages/instructor/monthly-monitoring/index.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <DashboardPage />, errorElement: <ErrorPage /> },
   { path: "profile", element: <ProfilePage /> },
+  { path: "reset-password", element: <ResetPassword /> },
   { path: "login", element: <LoginPage /> },
   { path: "register", element: <RegisterPage /> },
   {

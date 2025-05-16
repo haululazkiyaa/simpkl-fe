@@ -49,6 +49,11 @@ export default function DropdownUser(props) {
                 label: "Profil",
                 variant: "text-gray-700 dark:text-gray-300",
               },
+              {
+                href: "/reset-password",
+                label: "Ubah Password",
+                variant: "text-gray-700 dark:text-gray-300",
+              },
             ]}
           />
         </div>

@@ -45,3 +45,18 @@ export const getSupervisorProfile = async (token, callback) => {
       callback(false, error);
     });
 };
+
+export const changePassword = async (data, token, callback) => {
+  await axiosReq
+    .put(`${import.meta.env.VITE_API_URL}/auth/update-password`, data, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+    .then((res) => {
+      callback(true, res.data.message);
+    })
+    .catch((error) => {
+      callback(false, error.response.data.message);
+    });
+};
