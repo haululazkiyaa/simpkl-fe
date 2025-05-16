@@ -1,6 +1,8 @@
+import AdminProfile from "../../views/Profile/AdminProfile";
 import { AuthContext } from "../../context/AuthContext";
 import DashboardLayout from "../../components/Layouts/DashboardLayout";
 import StudentProfile from "../../views/Profile/StudentProfile";
+import SupervisorProfile from "../../views/Profile/SupervisorProfile";
 import { useContext } from "react";
 
 export default function ProfilePage() {
@@ -9,9 +11,9 @@ export default function ProfilePage() {
   return (
     <DashboardLayout>
       {profile.role === "ADMINSEKOLAH" ? (
-        <StudentProfile />
+        <AdminProfile />
       ) : profile.role === "PEMBIMBING" ? (
-        <StudentProfile />
+        <SupervisorProfile />
       ) : profile.role === "SISWA" ? (
         <StudentProfile />
       ) : (
