@@ -79,7 +79,7 @@ export default function ResetPasswordView() {
           {errorMsg}
         </div>
       )}
-      {setSuccessMsg === "" ? (
+      {setSuccessMsg ? (
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input
             label="Password Lama"
