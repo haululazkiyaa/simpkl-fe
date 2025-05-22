@@ -22,3 +22,8 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          args: >
+            -Dsonar.organization=haululazkiyaa
+            -Dsonar.projectKey=haululazkiyaa_simpkl
+           
